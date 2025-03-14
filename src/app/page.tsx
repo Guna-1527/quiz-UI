@@ -12,7 +12,6 @@ const page = () => {
       <Service />
       <CTA />
       <Testimonials />
-
     </div>
   )
 }

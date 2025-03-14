@@ -34,12 +34,12 @@ const categories = [
 
 const Service = () => {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center py-20">
+    <div id="categories" className="w-full min-h-screen flex flex-col items-center py-20">
       {/* Smoothly Appearing Header */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }} // Smooth easing
+        transition={{ duration: 1, ease: "easeOut" }}
         viewport={{ once: true }}
       >
         <Header name="Categories" />
@@ -54,7 +54,7 @@ const Service = () => {
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.4, ease: [0.25, 1, 0.5, 1] }, // Slower stagger
+            transition: { staggerChildren: 0.3, ease: "easeOut" },
           },
         }}
         viewport={{ once: true }}
@@ -63,8 +63,8 @@ const Service = () => {
           <motion.div
             key={item.id}
             variants={{
-              hidden: { opacity: 0, y: 70 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+              hidden: { opacity: 0, y: 50 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
             }}
           >
             <Model name={item.name} description={item.description} background={item.background} />

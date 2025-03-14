@@ -1,14 +1,22 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import HeroImg from "../../../public/image.png";
 import Button from "./Button";
 
 const Hero = () => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    // Smooth scrolling logic (optional, if using Locomotive Scroll or GSAP)
+  }, []);
+
   return (
-    <div className="w-full h-screen flex justify-between items-center px-10">
+    <div id="hero" ref={containerRef} className="w-full h-screen flex justify-between items-center px-10">
       {/* Left Content */}
       <div className="flex flex-1 flex-col justify-start">
         <div className="flex flex-col gap-2">
@@ -21,7 +29,7 @@ const Hero = () => {
           >
             Get Started
           </motion.p>
-          
+
           {/* Heading with Animated Span */}
           <motion.h1
             className="text-[60px]"
@@ -49,7 +57,7 @@ const Hero = () => {
               </motion.span>
             </span>
           </motion.h1>
-          
+
           {/* Description Text */}
           <motion.p
             className="text-[20px]"
@@ -59,7 +67,7 @@ const Hero = () => {
           >
             Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.
           </motion.p>
-          
+
           {/* Button Animation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
