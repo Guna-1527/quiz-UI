@@ -12,32 +12,60 @@ const Hero = () => {
       {/* Left Content */}
       <div className="flex flex-1 flex-col justify-start">
         <div className="flex flex-col gap-2">
-          <p className="font-bold">Get Started</p>
-          <h1 className="text-[60px]">
+          {/* Get Started Text */}
+          <motion.p
+            className="font-bold"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            Get Started
+          </motion.p>
+          
+          {/* Heading with Animated Span */}
+          <motion.h1
+            className="text-[60px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
             We help you to grow your business to the{" "}
             <span className="relative inline-block overflow-hidden">
               {/* Background Animation (Expanding from left to right) */}
               <motion.span
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
-                transition={{ duration: 1, ease: [0.7, 0, 0.3, 1] }} // Fast start, slow end
+                transition={{ duration: 1, delay: 0.8, ease: [0.7, 0, 0.3, 1] }}
                 className="absolute left-0 top-0 h-full bg-[#B9FF67]"
               />
               {/* Text Animation (Move from bottom to top) */}
               <motion.span
-                initial={{ y: 30, opacity: 0 }} // Start 30px below
-                animate={{ y: 0, opacity: 1 }} // Move up to position
-                transition={{ duration: 0.6, delay: 1, ease: "easeOut" }} // Delay until background is done
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
                 className="relative px-2 inline-block"
               >
                 next level
               </motion.span>
             </span>
-          </h1>
-          <p className="text-[20px]">
+          </motion.h1>
+          
+          {/* Description Text */}
+          <motion.p
+            className="text-[20px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
+          >
             Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.
-          </p>
-          <div>
+          </motion.p>
+          
+          {/* Button Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
+          >
             <Button
               name="Get Started"
               width="130px"
@@ -46,14 +74,19 @@ const Hero = () => {
               textColor="black"
               borderRadius="16px"
             />
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Right Image */}
-      <div className="flex flex-1">
+      <motion.div
+        className="flex flex-1"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 2, ease: "easeOut" }}
+      >
         <Image src={HeroImg} alt="hero" />
-      </div>
+      </motion.div>
     </div>
   );
 };

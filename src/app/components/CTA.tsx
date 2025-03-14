@@ -5,7 +5,7 @@ import HeroImg from "../../../public/image.png";
 
 const CTA = () => {
   return (
-    <div className="w-full h-[380px] border-2 border-black flex gap-10 rounded-2xl p-8 relative ">
+    <div className="w-[1300px] m-auto h-[300px] border-2 border-black flex gap-10 rounded-2xl p-8 relative ">
       <div className="left flex flex-1 gap-6 flex-col">
         <div className="flex flex-1 flex-col gap-6">
           <h1 className="font-bold text-2xl">Let’s make things happen</h1>
