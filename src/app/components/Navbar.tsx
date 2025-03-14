@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import logo from "../../../public/logo.png"
 import React from "react";
 import Button from "./Button";
 
