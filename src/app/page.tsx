@@ -1,15 +1,18 @@
 import React from 'react'
-import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Service from './components/Service';
+import CTA from './components/CTA';
+import Testimonials from './components/Testimonials';
 
 
 const page = () => {
   return (
     <div>
-      <Navbar />
       <Hero />
       <Service />
+      <CTA />
+      <Testimonials />
+
     </div>
   )
 }

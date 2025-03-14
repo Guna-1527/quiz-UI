@@ -1,7 +1,7 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 interface ButtonProps {
   name: string;
@@ -10,30 +10,66 @@ interface ButtonProps {
   backgroundColor?: string;
   textColor?: string;
   borderRadius?: string;
+  borderColor?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   name,
-  width = 'auto',
-  height = 'auto',
-  backgroundColor = '#f3f4f6',
-  textColor = '#000',
-  borderRadius = '6px', // Default border radius
+  width = "auto",
+  height = "auto",
+  backgroundColor = "#f3f4f6",
+  textColor = "#000",
+  borderRadius = "6px",
+  borderColor = "#000",
 }) => {
+  const [hoverPosition, setHoverPosition] = useState({ x: "50%", y: "50%" });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100 + "%";
+    const y = ((e.clientY - top) / height) * 100 + "%";
+    setHoverPosition({ x, y });
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <motion.button
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.8 }}
-      className="border-2 border-gray-800 cursor-pointer"
+      whileTap={{ scale: 0.95 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="relative overflow-hidden border-2 cursor-pointer transition-all duration-300"
       style={{
         width,
         height,
-        backgroundColor,
-        color: textColor,
-        borderRadius, // Apply dynamic border radius
+        backgroundColor: isHovered ? "black" : backgroundColor,
+        color: isHovered ? "white" : textColor,
+        borderRadius,
+        border: `2px solid ${borderColor}`,
+        position: "relative",
       }}
     >
-      {name}
+      {/* Ripple Effect */}
+      {isHovered && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0.8 }}
+          animate={{ scale: 3, opacity: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }} // Smooth ripple effect
+          className="absolute w-32 h-32 bg-white rounded-full"
+          style={{
+            top: hoverPosition.y,
+            left: hoverPosition.x,
+            transform: "translate(-50%, -50%)",
+            mixBlendMode: "difference", // Creates a cool effect on black background
+          }}
+        />
+      )}
+
+      <span className="relative z-10">{name}</span>
     </motion.button>
   );
 };

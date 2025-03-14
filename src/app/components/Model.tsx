@@ -1,18 +1,27 @@
-import React from 'react'
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
 
 interface ModelType {
-  name: string,
-  description: string,
-  background: string
+  name: string;
+  description: string;
+  background: string;
 }
 
-const Model = ({ name, description, background} : ModelType) => {
+const Model = ({ name, description, background }: ModelType) => {
   return (
-    <div style={{ backgroundColor: background }}  className='w-[600] h-[310] rounded-2xl mt-10 p-4'>
-      <h1 className='p-5 font-bold text-[24px]'>{name}</h1>
+    <motion.div
+      initial={{ scale: 1 }}
+      whileHover={{ scale: 1.1 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      style={{ backgroundColor: background }}
+      className="w-[600px] h-[310px] rounded-2xl p-6 border-2 border-black transition-all mb-10"
+    >
+      <h1 className="font-bold text-[24px]">{name}</h1>
       <p>{description}</p>
-    </div>
-  )
-}
+    </motion.div>
+  );
+};
 
-export default Model
+export default Model;

@@ -1,5 +1,6 @@
 import React from 'react'
 import Model from './Model'
+import Header from './Header'
 
 const categories = [
   {
@@ -32,7 +33,7 @@ const Service = () => {
   return (
     <div>
       <div className="header">
-        <h1 className='text-[40px] w-[200px] flex justify-center items-center font-extrabold'>Categories</h1>
+      <Header name="Categories" />
         <div className='grid grid-cols-2'>
           {
             categories.map((item) => (
