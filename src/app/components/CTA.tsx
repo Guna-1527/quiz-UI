@@ -10,7 +10,7 @@ const CTA = () => {
   return (
     <motion.div
       id="about"
-      className="w-[1300px] m-auto h-[300px] border-2 border-black flex gap-10 rounded-2xl p-8 relative overflow-hidden"
+      className="w-[1300px] m-auto h-[300px] border-2 border-black flex gap-10 rounded-2xl mt-10 p-8 relative overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}

@@ -7,11 +7,11 @@ import Button from "./Button";
 const Navbar = () => {
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, sectionId: string) => {
-    e.preventDefault(); // Prevent default anchor behavior
+    e.preventDefault();
 
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" }); // Smooth scrolling
+      section.scrollIntoView({ behavior: "smooth" }); 
     }
   };
 
@@ -32,6 +32,7 @@ const Navbar = () => {
             height="40px"
             backgroundColor="white"
             textColor="black"
+            navigateTo="/auth/signup"
             borderRadius="10px"
           />
         </div>

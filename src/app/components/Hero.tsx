@@ -78,6 +78,7 @@ const Hero = () => {
               name="Get Started"
               width="130px"
               height="60px"
+              navigateTo="/quiz"
               backgroundColor="white"
               textColor="black"
               borderRadius="16px"

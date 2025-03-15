@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface ButtonProps {
   name: string;
@@ -11,6 +12,7 @@ interface ButtonProps {
   textColor?: string;
   borderRadius?: string;
   borderColor?: string;
+  navigateTo?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,9 +23,11 @@ const Button: React.FC<ButtonProps> = ({
   textColor = "#000",
   borderRadius = "6px",
   borderColor = "#000",
+  navigateTo = "/",
 }) => {
   const [hoverPosition, setHoverPosition] = useState({ x: "50%", y: "50%" });
   const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -37,11 +41,16 @@ const Button: React.FC<ButtonProps> = ({
     setIsHovered(false);
   };
 
+  const handleClick = () => {
+    router.push(navigateTo);
+  };
+
   return (
     <motion.button
       whileTap={{ scale: 0.95 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       className="relative overflow-hidden border-2 cursor-pointer transition-all duration-300"
       style={{
         width,
