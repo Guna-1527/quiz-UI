@@ -16,7 +16,7 @@ export default function Navbar() {
       const { data, error } = await supabase
         .from("users")
         .select("username")
-        .eq("id", user.id)
+        // .eq("id", user.id)
         .single();
 
       if (error) {

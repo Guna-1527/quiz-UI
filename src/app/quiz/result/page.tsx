@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+
 import { useSearchParams, useRouter } from "next/navigation";
-import QuizLayout from "../layout";
+
 
 const QuizResult = () => {
   const searchParams = useSearchParams();
