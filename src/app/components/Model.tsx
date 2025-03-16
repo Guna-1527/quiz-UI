@@ -1,29 +1,50 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import Button from "./Button";
+import { useRouter } from "next/navigation";
+import { FaPlay } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
-interface ModelType {
+interface ModelProps {
   name: string;
-  description: string;
-  background: string;
 }
 
-const Model = ({ name, description, background }: ModelType) => {
+const Model: React.FC<ModelProps> = ({ name }) => {
+  const router = useRouter();
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(!!data?.user);
+    };
+    checkUser();
+  }, []);
+
+  const handleClick = () => {
+    if (user) {
+      router.push("/quiz");
+    } else {
+      router.push("/auth/login");
+    }
+  };
+
   return (
     <motion.div
-      initial={{ scale: 1 }}
-      whileHover={{ scale: 1.04 }}
-      transition={{ duration: 0.4, ease: "easeIn" }}
-      style={{ backgroundColor: background }}
-      className="w-[600px] h-[210px] rounded-2xl flex flex-col justify-between p-6 border-2 border-black transition-all mb-10"
+      whileHover={{ scale: 1.05 }}
+      className="flex flex-wrap justify-between items-center gap-2 bg-white px-4 py-3 shadow-md rounded-lg cursor-pointer border border-gray-300 hover:bg-blue-100 transition w-40 h-20" // Fixed size
+      onClick={handleClick}
     >
-      <h1 className="font-bold text-[24px]">{name}</h1>
-      <p>{description}</p>
-      <div><Button name="Learn more" width="120px" height="35px" backgroundColor="black" textColor="white" borderRadius="8px"/> </div>
+      <span className="text-sm font-medium text-gray-700 text-center w-full break-words">
+        {name}
+      </span>
+      <button className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition">
+        <FaPlay size={14} />
+      </button>
     </motion.div>
   );
 };
 
 export default Model;
+  

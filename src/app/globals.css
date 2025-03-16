@@ -4,6 +4,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+::selection {
+  background-color: black;
+  color: white
+}
+
 @plugin 'tailwindcss-animate';
 
 * {

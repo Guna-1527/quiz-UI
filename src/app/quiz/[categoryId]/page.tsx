@@ -7,7 +7,7 @@ import { AiOutlineCalculator, AiOutlineCode, AiOutlineBook, AiOutlineExperiment,
 
 // Function to get an icon based on category name
 const getCategoryIcon = (categoryName: string) => {
-  const icons: { [key: string]: JSX.Element } = {
+  const icons: { [key: string]: any } = {
     "Math": <AiOutlineCalculator className="w-6 h-6 text-gray-700" />,
     "Science": <AiOutlineExperiment className="w-6 h-6 text-gray-700" />,
     "Programming": <AiOutlineCode className="w-6 h-6 text-gray-700" />,

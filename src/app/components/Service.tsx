@@ -1,78 +1,65 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import Model from "./Model";
-import Header from "./Header";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabase";
 
-const categories = [
-  {
-    id: 1,
-    name: "General Knowledge",
-    description: "Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.",
-    background: "#B9FF67",
-  },
-  {
-    id: 2,
-    name: "Database & Algorithm",
-    description: "Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.",
-    background: "white",
-  },
-  {
-    id: 3,
-    name: "Current Affair",
-    description: "Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.",
-    background: "white",
-  },
-  {
-    id: 4,
-    name: "Science & Technology",
-    description: "Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.",
-    background: "#B9FF67",
-  },
-];
+export default function CategoryGrid() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const Service = () => {
+  useEffect(() => {
+    async function checkUser() {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    }
+    checkUser();
+  }, []);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const { data, error } = await supabase.from("categories").select("id, name");
+
+        if (error) throw error;
+
+        setCategories(data);
+      } catch (err) {
+        setError("Failed to load categories.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchCategories();
+  }, []);
+
+  const handleCategoryClick = () => {
+    if (user) {
+      router.push("/quiz");
+    } else {
+      router.push("/auth/login");
+    }
+  };
+
+  if (loading) return <p className="text-center text-gray-600">Loading categories...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+
   return (
-    <div id="categories" className="w-full min-h-screen flex flex-col items-center py-20">
-      {/* Smoothly Appearing Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
-      >
-        <Header name="Categories" />
-      </motion.div>
-
-      {/* Animated Grid Container */}
-      <motion.div
-        className="grid grid-cols-2 gap-6"
-        initial="hidden"
-        whileInView="visible"
-        variants={{
-          hidden: { opacity: 0 },
-          visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.3, ease: "easeOut" },
-          },
-        }}
-        viewport={{ once: true }}
-      >
-        {categories.map((item) => (
-          <motion.div
-            key={item.id}
-            variants={{
-              hidden: { opacity: 0, y: 50 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
-            }}
-          >
-            <Model name={item.name} description={item.description} background={item.background} />
-          </motion.div>
-        ))}
-      </motion.div>
+    <div className="w-full flex flex-wrap gap-4 justify-center p-6">
+      {categories.map((category) => (
+        <div
+          key={category.id}
+          className="flex items-center justify-between border border-gray-300 px-4 py-2 rounded-lg shadow-md bg-white hover:bg-gray-100 transition cursor-pointer"
+          onClick={handleCategoryClick}
+        >
+          <span className="text-gray-800 font-medium">{category.name}</span>
+          
+        </div>
+      ))}
     </div>
   );
-};
-
-export default Service;
+}

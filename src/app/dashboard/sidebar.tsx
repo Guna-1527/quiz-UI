@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { supabase } from "../lib/supabase";
 import { FaHome, FaChartBar, FaCog, FaSignOutAlt, FaList } from "react-icons/fa";
 
 const menuItems = [
@@ -11,6 +12,16 @@ const menuItems = [
 
 export default function Sidebar() {
   const router = useRouter();
+
+  // Logout Function
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Logout Error:", error.message);
+      return;
+    }
+    router.push("/"); // Redirect to home page after logout
+  };
 
   return (
     <aside className="w-64 bg-white shadow-lg h-full flex flex-col p-4">
@@ -41,7 +52,10 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout */}
-      <button className="flex items-center gap-3 p-3 text-lg text-red-600 hover:bg-red-100 rounded-lg transition">
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-3 p-3 text-lg text-red-600 hover:bg-red-100 rounded-lg transition"
+      >
         <FaSignOutAlt size={20} />
         Logout
       </button>

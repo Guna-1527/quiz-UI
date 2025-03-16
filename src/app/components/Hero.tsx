@@ -1,103 +1,101 @@
 "use client";
 
-import Image from "next/image";
-import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import HeroImg from "../../../public/image.png";
-import Button from "./Button";
+import { useRouter } from "next/navigation";
+import { FaQuestionCircle, FaStar, FaLightbulb, FaTrophy, FaBookOpen } from "react-icons/fa";
 
-const Hero = () => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    
-    // Smooth scrolling logic (optional, if using Locomotive Scroll or GSAP)
-  }, []);
+export default function Hero() {
+  const router = useRouter();
 
   return (
-    <div id="hero" ref={containerRef} className="w-full h-screen flex justify-between items-center px-10">
-      {/* Left Content */}
-      <div className="flex flex-1 flex-col justify-start">
-        <div className="flex flex-col gap-2">
-          {/* Get Started Text */}
-          <motion.p
-            className="font-bold"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            Get Started
-          </motion.p>
-
-          {/* Heading with Animated Span */}
-          <motion.h1
-            className="text-[60px]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          >
-            We help you to grow your business to the{" "}
-            <span className="relative inline-block overflow-hidden">
-              {/* Background Animation (Expanding from left to right) */}
-              <motion.span
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, delay: 0.8, ease: [0.7, 0, 0.3, 1] }}
-                className="absolute left-0 top-0 h-full bg-[#B9FF67]"
-              />
-              {/* Text Animation (Move from bottom to top) */}
-              <motion.span
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.2, ease: "easeOut" }}
-                className="relative px-2 inline-block"
-              >
-                next level
-              </motion.span>
-            </span>
-          </motion.h1>
-
-          {/* Description Text */}
-          <motion.p
-            className="text-[20px]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
-          >
-            Quos aut sed nesciunt facere reprehenderit mollitia vero dignissimos aliquam officia nobis. Asperiores eius explicabo saepe est voluptas cum officia.
-          </motion.p>
-
-          {/* Button Animation */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
-          >
-            <Button
-              name="Get Started"
-              width="130px"
-              height="60px"
-              navigateTo="/quiz"
-              backgroundColor="white"
-              textColor="black"
-              borderRadius="16px"
-            />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Right Image */}
-      <motion.div
-        className="flex flex-1"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 2, ease: "easeOut" }}
-      >
-        <Image src={HeroImg} alt="hero" />
+    <section className="relative w-full h-screen flex flex-col justify-center items-center bg-white overflow-hidden">
+      {/* Animated Falling Icons */}
+      <motion.div className="absolute inset-0 flex justify-center">
+        <FallingIcons />
       </motion.div>
+
+      {/* Hero Text */}
+      <motion.h1
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="text-6xl font-extrabold text-white text-center leading-tight drop-shadow-lg"
+      >
+        Welcome to <span className="bg-gradient-to-r from-yellow-300 to-pink-400 text-transparent bg-clip-text">Quizify</span> 🎉
+      </motion.h1>
+
+      {/* Subtext */}
+      <motion.p
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+        className="text-lg text-blue-600 mt-4 text-center max-w-xl"
+      >
+        Challenge yourself with exciting quizzes and level up your knowledge! 🚀
+      </motion.p>
+
+      {/* Buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 1, ease: "easeOut" }}
+        className="mt-6 flex gap-4"
+      >
+        <button
+          onClick={() => router.push("/auth/login")}
+          className="px-6 py-3 bg-blue-600 text-white font-semibold text-lg rounded-lg shadow-lg hover:bg-blue-700 transition cursor-pointer"
+        >
+          Start Playing ▶️
+        </button>
+        <button
+          onClick={() => router.push("/auth/login")}
+          className="px-6 py-3 border border-blue-600 text-blue-600 font-semibold text-lg rounded-lg hover:bg-blue-100 transition cursor-pointer"
+        >
+          Login 🚀
+        </button>
+      </motion.div>
+    </section>
+  );
+}
+
+// Animated Falling Icons
+function FallingIcons() {
+  const icons = [
+    <FaQuestionCircle size={30} className="text-blue-500" />,
+    <FaStar size={30} className="text-yellow-400" />,
+    <FaLightbulb size={30} className="text-blue-300" />,
+    <FaTrophy size={30} className="text-red-400" />,
+    <FaBookOpen size={30} className="text-green-400" />,
+  ];
+
+  return (
+    <div className="absolute w-full h-full pointer-events-none">
+      {Array(15)
+        .fill(0)
+        .map((_, index) => {
+          const randomX = Math.random() * 100; // Random X position
+          const randomDelay = Math.random() * 4; // Random start delay
+          const randomSize = Math.random() * 15 + 20; // Varying icon size
+          const randomDuration = Math.random() * 4 + 8; // Slower fall (8-12s)
+
+          return (
+            <motion.div
+              key={index}
+              className="absolute"
+              style={{ left: `${randomX}%`, top: "-5%" }}
+              initial={{ y: "-100vh", opacity: 1 }}
+              animate={{ y: "100vh", opacity: 0 }}
+              transition={{
+                duration: randomDuration,
+                delay: randomDelay,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            >
+              {icons[Math.floor(Math.random() * icons.length)]}
+            </motion.div>
+          );
+        })}
     </div>
   );
-};
-
-export default Hero;
+}

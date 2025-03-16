@@ -11,7 +11,7 @@ const page = () => {
   return (
     <div>
       <Navbar />
-      <div className='max-w-[1300px] m-auto'>
+      <div className=''>
         
       <Hero />
       <Service />
